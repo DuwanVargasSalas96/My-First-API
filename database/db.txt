@@ -1,0 +1,32 @@
+// Create const
+const mongodb = require("mongodb");
+const mongodbClient = mongodb.MongoClient;
+const uri = "URL de conexión a MongoDB Atlas";
+const databaseName = "Nombre de base de datos";
+const collectionName = "Nombre de colección";
+
+// Connect to database
+function connection(successCallBack, failureCallBack) {
+    // Execute connection
+    mongodbClient.connect(uri, function (error, databaseInstance) {
+        //C onnection control
+        if(error) {
+            // Log
+            console.log("MongoDB error: " + error)
+        }
+        else {
+            // Create const
+            const database = databaseInstance.db(databaseName);
+            const collection = database.collection(collectionName);
+            
+            // Log
+            console.log("MongoDB information: Connection done");
+
+            // Callback
+            successCallBack(collection);
+        }
+  });
+}
+
+// Exports
+module.exports = { connection };
